@@ -4,7 +4,8 @@
   "require": {
     "php": ">= 5.5.0",
     "guzzlehttp/guzzle": "~6.0.0",
-    "koalamon/koalamonclient": "dev-master"
+    "koalamon/koalamonclient": "dev-master",
+    "symfony/console": "~2.2"
   },
   "autoload": {
     "psr-4": {
