@@ -1,5 +1,5 @@
 {
-  "directories": ["vendor"],
+  "directories": ["vendor", "src"],
   "main": "bin/KoalaBatch.php",
   "output": "bin/KoalaBatch.phar",
   "chmod": "0755",
