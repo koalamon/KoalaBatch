@@ -1,0 +1,14 @@
+{
+  "name": "koalamon/koalabatch",
+  "description": "Tool for running defined tools over all systems accessible for a given user",
+  "require": {
+    "php": ">= 5.5.0",
+    "guzzlehttp/guzzle": "~6.0.0",
+    "koalamon/koalamonclient": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "Koalamon\\KoalaBatch\\": "src/"
+    }
+  }
+}
