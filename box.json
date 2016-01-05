@@ -1,0 +1,19 @@
+{
+  "directories": ["vendor"],
+  "main": "bin/KoalaBatch.php",
+  "output": "bin/KoalaBatch.phar",
+  "chmod": "0755",
+  "stub": true,
+  "finder": [
+    {
+      "name": "*.php",
+      "exclude": [
+        "Tests",
+        "tests",
+        "example",
+        "test"
+      ],
+      "in": "vendor"
+    }
+  ]
+}
