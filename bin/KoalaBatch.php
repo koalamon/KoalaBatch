@@ -41,9 +41,12 @@ foreach ($projects as $project) {
         $translatedCommand = translate($translation, $command);
 
         $output = '';
+
+        echo "Executing: " . $translatedCommand . "\n";
         exec($translatedCommand, $output, $return_var);
 
-        echo implode("\n", $output) . "\n";
+        echo "  Output: \n";
+        echo implode("\n    ", $output) . "\n";
     }
 }
 
