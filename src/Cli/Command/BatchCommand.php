@@ -26,25 +26,31 @@ class BatchCommand extends Command
                 'project_name' => $project->getName()
             );
 
-            foreach ($systems as $system) {
-                $translation = array_merge($translation, array(
-                    'system_name' => $system->getName(),
-                    'system_identifier' => $system->getIdentifier(),
-                    'system_url' => $system->getUrl()
-                ));
+            foreach ($systems as $mainSystem) {
 
-                $translatedCommand = $this->translate($translation, $command);
+                $withSubSystems = $mainSystem->getSubSystems();
+                $withSubSystems[] = $mainSystem;
 
-                $outputString = '';
+                foreach ($withSubSystems as $system) {
 
-                $output->writeln("  Executing: " . $translatedCommand);
-                exec($translatedCommand, $outputString, $return_var);
+                    $translation = array_merge($translation, array(
+                        'system_name' => $system->getName(),
+                        'system_identifier' => $mainSystem->getIdentifier(),
+                        'system_url' => $system->getUrl()
+                    ));
 
-                $output->writeln("  Output:");
-                foreach ($outputString as $outputElement) {
-                    $output->writeln("   " . $outputElement);
+                    $translatedCommand = $this->translate($translation, $command);
+
+                    $outputString = '';
+
+                    $output->writeln("  Executing: " . $translatedCommand);
+                    exec($translatedCommand, $outputString, $return_var);
+
+                    $output->writeln("  Output:");
+                    foreach ($outputString as $outputElement) {
+                        $output->writeln("   " . $outputElement);
+                    }
                 }
-
             }
         }
     }
