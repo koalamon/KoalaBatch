@@ -3,6 +3,7 @@
 namespace Koalamon\KoalaBatch\Cli;
 
 use Koalamon\KoalaBatch\Cli\Command\ProjectCommand;
+use Koalamon\KoalaBatch\Cli\Command\UrlCommand;
 use Koalamon\KoalaBatch\Cli\Command\UserCommand;
 use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
@@ -47,5 +48,6 @@ class Application extends \Symfony\Component\Console\Application
     {
         $this->add(new UserCommand());
         $this->add(new ProjectCommand());
+        $this->add(new UrlCommand());
     }
 }

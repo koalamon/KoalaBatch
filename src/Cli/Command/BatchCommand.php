@@ -31,26 +31,40 @@ class BatchCommand extends Command
                 $withSubSystems = $mainSystem->getSubSystems();
                 $withSubSystems[] = $mainSystem;
 
-                foreach ($withSubSystems as $system) {
+                $this->executeSystems($withSubSystems, $command, $output);
+            }
+        }
+    }
 
-                    $translation = array_merge($translation, array(
-                        'system_name' => $system->getName(),
-                        'system_identifier' => $mainSystem->getIdentifier(),
-                        'system_url' => $system->getUrl()
-                    ));
+    /**
+     * @param System[] $systems
+     * @param $command
+     * @param OutputInterface $outputInterface
+     * @param Client $client
+     */
+    protected function executeSystems(array $systems, $command, OutputInterface $output)
+    {
+        foreach ($systems as $system) {
 
-                    $translatedCommand = $this->translate($translation, $command);
+            $translation = array(
+                'system_name' => $system->getName(),
+                'system_identifier' => $system->getIdentifier(),
+                'system_url' => $system->getUrl(),
+                'project_identifier' => $system->getProject()->getIdentifier(),
+                'project_api_key' => $system->getProject()->getApiKey(),
+                'project_name' => $system->getProject()->getName()
+            );
 
-                    $outputString = '';
+            $translatedCommand = $this->translate($translation, $command);
 
-                    $output->writeln("  Executing: " . $translatedCommand);
-                    exec($translatedCommand, $outputString, $return_var);
+            $outputString = '';
 
-                    $output->writeln("  Output:");
-                    foreach ($outputString as $outputElement) {
-                        $output->writeln("   " . $outputElement);
-                    }
-                }
+            $output->writeln("  Executing: " . $translatedCommand);
+            exec($translatedCommand, $outputString, $return_var);
+
+            $output->writeln("  Output:");
+            foreach ($outputString as $outputElement) {
+                $output->writeln("   " . $outputElement);
             }
         }
     }
