@@ -20,6 +20,7 @@ class ProjectCommand extends BatchCommand
                 new InputArgument('api_key', InputArgument::REQUIRED, 'the project api key'),
                 new InputArgument('exec', InputArgument::REQUIRED, 'the command to be executed'),
                 new InputOption('koalamon_server', 'k', InputOption::VALUE_OPTIONAL, 'the command to be executed'),
+                new InputOption('with-subsystems', 's', InputOption::VALUE_NONE, 'run the command for all subsystems'),
             ))
             ->setDescription('run batch commands for all systems of a given project')
             ->setName('project');
@@ -29,14 +30,22 @@ class ProjectCommand extends BatchCommand
     {
         $httpClient = new Client();
 
-        if($input->getOption('koalamon_server')) {
+        if ($input->getOption('koalamon_server')) {
             $client = new KoalaClient($httpClient, $input->getOption('koalamon_server'));
-        }else {
+        } else {
             $client = new KoalaClient($httpClient);
         }
 
         $projects = [new Project('', $input->getArgument('project_identifier'), $input->getArgument('api_key'))];
 
-        $this->executeProjects($projects, $input->getArgument('exec'), $output, $client);
+        if ($input->getOption('with-subsystems')) {
+            $withSubsystems = true;
+        } else {
+            $withSubsystems = false;
+        }
+
+        var_dump($withSubsystems);
+
+        $this->executeProjects($projects, $input->getArgument('exec'), $output, $client, $withSubsystems);
     }
 }

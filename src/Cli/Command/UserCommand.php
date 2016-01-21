@@ -20,6 +20,7 @@ class UserCommand extends BatchCommand
                 new InputArgument('api_key', InputArgument::REQUIRED, 'the user api key'),
                 new InputArgument('exec', InputArgument::REQUIRED, 'the command to be executed'),
                 new InputOption('koalamon_server', 'k', InputOption::VALUE_OPTIONAL, 'the command to be executed'),
+                new InputOption('with-subsystems', 's', InputOption::VALUE_OPTIONAL, 'run the command for all subsystems', 1)
             ))
             ->setDescription('run batch commands for all systems of a given user')
             ->setName('user');
@@ -29,14 +30,20 @@ class UserCommand extends BatchCommand
     {
         $httpClient = new Client();
 
-        if($input->getOption('koalamon_server')) {
+        if ($input->getOption('koalamon_server')) {
             $client = new KoalaClient($httpClient, $input->getOption('koalamon_server'));
-        }else {
+        } else {
             $client = new KoalaClient($httpClient);
+        }
+
+        if ($input->getOption('with_subsystems')) {
+            $withSubsystems = true;
+        } else {
+            $withSubsystems = false;
         }
 
         $projects = $client->getProjects(new User($input->getArgument('username'), $input->getArgument('api_key')));
 
-        $this->executeProjects($projects, $input->getArgument('exec'), $output, $client);
+        $this->executeProjects($projects, $input->getArgument('exec'), $output, $client, $withSubsystems);
     }
 }

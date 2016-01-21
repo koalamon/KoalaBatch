@@ -15,23 +15,22 @@ class BatchCommand extends Command
      * @param array $translation
      * @param OutputInterface $output
      */
-    protected function executeProjects(array $projects, $command, OutputInterface $output, Client $client)
+    protected function executeProjects(array $projects, $command, OutputInterface $output, Client $client, $withSubsystems = false)
     {
         foreach ($projects as $project) {
             $systems = $client->getSystems($project);
 
-            $translation = array(
-                'project_identifier' => $project->getIdentifier(),
-                'project_api_key' => $project->getApiKey(),
-                'project_name' => $project->getName()
-            );
-
             foreach ($systems as $mainSystem) {
 
-                $withSubSystems = $mainSystem->getSubSystems();
-                $withSubSystems[] = $mainSystem;
+                if ($withSubsystems) {
+                    $systemsWithSubSystems = $mainSystem->getSubSystems();
+                } else {
+                    $systemsWithSubSystems = array();
+                }
 
-                $this->executeSystems($withSubSystems, $command, $output);
+                $systemsWithSubSystems[] = $mainSystem;
+
+                $this->executeSystems($systemsWithSubSystems, $command, $output);
             }
         }
     }
