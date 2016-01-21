@@ -20,7 +20,7 @@ class UserCommand extends BatchCommand
                 new InputArgument('api_key', InputArgument::REQUIRED, 'the user api key'),
                 new InputArgument('exec', InputArgument::REQUIRED, 'the command to be executed'),
                 new InputOption('koalamon_server', 'k', InputOption::VALUE_OPTIONAL, 'the command to be executed'),
-                new InputOption('with-subsystems', 's', InputOption::VALUE_NONE, 'run the command for all subsystems', 1)
+                new InputOption('with-subsystems', 's', InputOption::VALUE_NONE, 'run the command for all subsystems')
             ))
             ->setDescription('run batch commands for all systems of a given user')
             ->setName('user');
