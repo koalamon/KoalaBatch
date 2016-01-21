@@ -36,7 +36,7 @@ class UserCommand extends BatchCommand
             $client = new KoalaClient($httpClient);
         }
 
-        if ($input->getOption('with_subsystems')) {
+        if ($input->getOption('with-subsystems')) {
             $withSubsystems = true;
         } else {
             $withSubsystems = false;
