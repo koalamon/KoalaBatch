@@ -43,7 +43,8 @@ class BatchCommand extends Command
      */
     protected function executeSystems(array $systems, $command, OutputInterface $output)
     {
-        foreach ($systems as $system) {
+        foreach ($systems as $systemConfig) {
+            $system = $systemConfig['system'];
 
             $translation = array(
                 'system_name' => $system->getName(),
@@ -51,7 +52,8 @@ class BatchCommand extends Command
                 'system_url' => $system->getUrl(),
                 'project_identifier' => $system->getProject()->getIdentifier(),
                 'project_api_key' => $system->getProject()->getApiKey(),
-                'project_name' => $system->getProject()->getName()
+                'project_name' => $system->getProject()->getName(),
+                'options' => json_encode($systemConfig['options'])
             );
 
             $translatedCommand = $this->translate($translation, $command);

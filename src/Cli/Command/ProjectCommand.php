@@ -44,8 +44,6 @@ class ProjectCommand extends BatchCommand
             $withSubsystems = false;
         }
 
-        var_dump($withSubsystems);
-
         $this->executeProjects($projects, $input->getArgument('exec'), $output, $client, $withSubsystems);
     }
 }

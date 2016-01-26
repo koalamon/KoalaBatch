@@ -29,7 +29,7 @@ class UrlCommand extends BatchCommand
 
         $client = new KoalaClient($httpClient);
 
-        $systems = $client->getSystemsFromUrl($input->getArgument('url'));
+        $systems = $client->getSystemsFromUrl($input->getArgument('url'), true);
 
         $this->executeSystems($systems, $input->getArgument('exec'), $output, $client);
     }
