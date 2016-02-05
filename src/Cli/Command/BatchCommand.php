@@ -58,15 +58,20 @@ class BatchCommand extends Command
 
             $translatedCommand = $this->translate($translation, $command);
 
-            $outputString = '';
+            $this->executeCommand($output, $translatedCommand);
+        }
+    }
 
-            $output->writeln("  Executing: " . $translatedCommand);
-            exec($translatedCommand, $outputString, $return_var);
+    protected function executeCommand(OutputInterface $output, $command)
+    {
+        $outputString = '';
 
-            $output->writeln("  Output:");
-            foreach ($outputString as $outputElement) {
-                $output->writeln("   " . $outputElement);
-            }
+        $output->writeln("  Executing: " . $command);
+        exec($command, $outputString, $return_var);
+
+        $output->writeln("  Output:");
+        foreach ($outputString as $outputElement) {
+            $output->writeln("   " . $outputElement);
         }
     }
 
